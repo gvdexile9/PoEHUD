@@ -17,8 +17,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public Entity LocalPlayer => GameController.Instance.Cache.Enable && GameController.Instance.Cache.LocalPlayer != null
             ? GameController.Instance.Cache.LocalPlayer
             : GameController.Instance.Cache.Enable ? GameController.Instance.Cache.LocalPlayer = LocalPlayerReal : LocalPlayerReal;
-        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x300);
-        public EntityList EntityList => GetObject<EntityList>(Address + 0x3B0);
+        private Entity LocalPlayerReal => ReadObject<Entity>(Address + 0x380);
+        public EntityList EntityList => GetObject<EntityList>(Address + 0x430);
 
         private long LabDataPtr => M.ReadLong(Address + 0x70);
         public LabyrinthData LabyrinthData => LabDataPtr == 0 ? null : GetObject<LabyrinthData>(LabDataPtr);
@@ -28,8 +28,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         {
             get
             {
-                var statPtrStart = M.ReadLong(Address + 0x320);
-                var statPtrEnd = M.ReadLong(Address + 0x328);
+                var statPtrStart = M.ReadLong(Address + 0x3A0);
+                var statPtrEnd = M.ReadLong(Address + 0x3A8);
 
                 int key = 0;
                 int value = 0;
@@ -43,29 +43,6 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
                     result[(GameStat)key] = value;
                 }
                 return result;
-            }
-        }
-
-        public List<PortalObject> TownPortals
-        {
-            get
-            {
-                var statPtrStart = M.ReadLong(Address + 0x468);
-                var statPtrEnd = M.ReadLong(Address + 0x470);
-
-                return M.ReadStructsArray<PortalObject>(statPtrStart, statPtrEnd, PortalObject.StructSize, 20);
-            }
-        }
-        public class PortalObject : RemoteMemoryObject
-        {
-            public const int StructSize = 0x38;
-
-            public string PlayerOwner => GetObject<NativeStringReader>(Address + 0x08).Value;
-            public WorldArea Area => GameController.Instance.Files.WorldAreas.GetAreaByAreaId(M.ReadInt(Address + 0x28));
-
-            public override string ToString()
-            {
-                return $"{PlayerOwner} => {Area.Name}";
             }
         }
     }

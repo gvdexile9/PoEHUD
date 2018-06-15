@@ -167,8 +167,6 @@ namespace PoeHUD.Controllers
            //Coroutine for update entity list
             var updateEntity = (new Coroutine(() => { EntityListWrapper.RefreshState(); }, updateEntityLimit,nameof(GameController), "Update Entity"){Priority = CoroutinePriority.High});
 
-            var checkTabs = (new Coroutine(() => { StashController.CheckStashTabsLoop(); }, updateStashTabs, nameof(StashTabController), "Stash Tab Controller") { Priority = CoroutinePriority.Normal });
-
             //
             //Control cache for game status
             var updateGameState = (new Coroutine(() => { 
@@ -213,7 +211,6 @@ namespace PoeHUD.Controllers
                 updateEntity.AutoRestart(CoroutineRunner).Run();
             sw.Restart();
             updateCoroutine.Run();
-            checkTabs.Run();
             while (true)
             {
                 if (!InGame)

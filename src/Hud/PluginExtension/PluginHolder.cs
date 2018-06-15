@@ -125,7 +125,6 @@ namespace PoeHUD.Hud.PluginExtension
         internal void InitializeSettingsMenu(bool ignoreAttribute = false)//ignoreAttribute - for Core plugins
         {
             SettingPropertyDrawers.Clear();
-            StashTabNodesToUnload.ForEach(x => StashTabController.UnregisterStashNode(x));
             StashTabNodesToUnload.Clear();
 
             var settingsProps = Settings.GetType().GetProperties();
@@ -182,7 +181,6 @@ namespace PoeHUD.Hud.PluginExtension
                     {
                         var stashNode = property.GetValue(Settings) as StashTabNode;
                         StashTabNodesToUnload.Add(stashNode);
-                        StashTabController.RegisterStashNode(stashNode);
                         drawer = new StashTabNodeSettingDrawer(stashNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType.IsGenericType)

@@ -54,28 +54,7 @@ namespace PoeHUD.Poe.Components
         public PantheonGod PantheonMinor => (PantheonGod)M.ReadByte(Address + 0x5b);
         public PantheonGod PantheonMajor => (PantheonGod)M.ReadByte(Address + 0x5c);
 
-        
-        public List<PassiveSkill> AllocatedPassives
-        {
-            get
-            {
-                var result = new List<PassiveSkill>();
-                var passiveIds = GameController.Instance.Game.IngameState.ServerData.PassiveSkillIds;
-
-                foreach(var id in passiveIds)
-                {
-                    var passive = GameController.Instance.Files.PassiveSkills.GetPassiveSkillByPassiveId(id);
-                    if(passive == null)
-                    {
-                        DebugPlug.DebugPlugin.LogMsg($"Can't find passive with id: {id}", 10, SharpDX.Color.Red);
-                        continue;
-                    }
-                    result.Add(passive);
-                }
-                return result;
-            }
-        }
-        
+                
         #region Trials
         public bool IsTrialCompleted(string trialId)
         {

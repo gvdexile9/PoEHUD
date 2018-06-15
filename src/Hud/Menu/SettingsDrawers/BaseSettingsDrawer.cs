@@ -191,16 +191,6 @@ namespace PoeHUD.Hud.Menu.SettingsDrawers
                 ImGuiExtension.Label($"Ex:{StashNode.Exist}, Ind:{StashNode.VisibleIndex}, Id:{StashNode.Id}, Name: {StashNode.Name}");
                 ImGui.SameLine();
             }
-
-            if (ImGui.Combo(ImguiUniqLabel, ref selectedIndex, StashTabController.StashTabNames, StashTabController.StashTabNames.Length * 20))
-            {
-                var node = StashTabController.GetStashTabNodeByVisibleIndex(selectedIndex);
-                StashNode.Name = node.Name;
-                StashNode.VisibleIndex = node.VisibleIndex;
-                StashNode.Id = node.Id;
-                StashNode.Exist = true;
-                StashNode.IsRemoveOnly = node.IsRemoveOnly;
-            }
         }
     }
 
