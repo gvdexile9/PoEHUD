@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 namespace PoeHUD.Models
 {
+    using Poe.RemoteMemoryObjects;
+
     public sealed class EntityListWrapper
     {
         private readonly GameController gameController;
@@ -23,7 +25,7 @@ namespace PoeHUD.Models
         public ICollection<EntityWrapper> Entities => entityCache.Values;
 
         private EntityWrapper player;
-        public Dictionary<Enums.GameStat, int> PlayerStats { get; private set; } = new Dictionary<Enums.GameStat, int>();
+        public Dictionary<int, int> PlayerStats { get; private set; } = new Dictionary<int, int>();
         public EntityWrapper Player
         {
             get
@@ -122,7 +124,7 @@ namespace PoeHUD.Models
             return entityCache.TryGetValue(id, out result) ? result : null;
         }
 
-        public EntityLabel GetLabelForEntity(Entity entity)
+        public string GetLabelForEntity(Entity entity)
         {
             var hashSet = new HashSet<long>();
             long entityLabelMap = gameController.Game.IngameState.EntityLabelMap;
@@ -141,7 +143,7 @@ namespace PoeHUD.Models
                     return null;
                 }
             }
-            return gameController.Game.ReadObject<EntityLabel>(num + 0x18);
+            return gameController.Game.ReadObject<EntityLabel>(num + 0x18).Text;
         }
     }
 }

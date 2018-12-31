@@ -55,6 +55,7 @@ namespace PoeHUD.Hud.Loot
             {
                 if (!string.IsNullOrEmpty(path))
                 {
+                    DebugPlug.DebugPlugin.LogMsg("Loading the Filter File", 4);
                     using (var fileStream = new StreamReader(path))
                     {
                         var input = new AntlrInputStream(fileStream.ReadToEnd());
@@ -109,13 +110,12 @@ namespace PoeHUD.Hud.Loot
 
             if (Settings.Enable)
             {
-                Positioned pos = GameController.Player.GetComponent<Positioned>();
-                if (pos == null)
-                    return;
-                Vector2 playerPos = pos.GridPos;
-                Vector2 position = StartDrawPointFunc();
+                var pos = GameController.Player.GetComponent<Positioned>();
+
+                var playerPos = pos.GridPos;
+                var position = StartDrawPointFunc();
                 const int BOTTOM_MARGIN = 2;
-                bool shouldUpdate = false;
+                var shouldUpdate = false;
 
                 var validAlerts = currentAlerts.ToList().Where(
                     x => x.Key != null && x.Key.Address != 0 && x.Key.IsValid);
@@ -412,22 +412,19 @@ namespace PoeHUD.Hud.Loot
 
         private string GetItemName(KeyValuePair<EntityWrapper, AlertDrawStyle> kv)
         {
-            string text;
-            Entity itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
-            EntityLabel labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(itemEntity);
+            var itemEntity = kv.Key.GetComponent<WorldItem>().ItemEntity;
+
+            var labelForEntity = GameController.EntityListWrapper.GetLabelForEntity(itemEntity);
             if (labelForEntity == null)
             {
                 if (!itemEntity.IsValid)
                 {
                     return null;
                 }
-                text = kv.Value.Text;
+                labelForEntity = kv.Value.Text;
             }
-            else
-            {
-                text = labelForEntity.Text;
-            }
-            return text;
+
+            return labelForEntity;
         }
 
         private void OnAreaChange(AreaController area)

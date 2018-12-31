@@ -26,20 +26,23 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
             M = m;
             Instance = this;
             Address = m.ReadLong(Offsets.GameStateOffset + m.AddressOfProcess);
-
             AllGameStates = ReadHashMap(Address + 0x48);
 
             PreGameStatePtr = AllGameStates["PreGameState"].Address;
             LoginStatePtr = AllGameStates["LoginState"].Address;
-            SelectCharacterStatePtr = AllGameStates["SelectCharacterState"].Address;
-            WaitingStatePtr = AllGameStates["WaitingState"].Address;
-            InGameStatePtr = AllGameStates["InGameState"].Address;
-            LoadingState = AllGameStates["AreaLoadingState"].AsObject<AreaLoadingState>();
-            IngameState = AllGameStates["InGameState"].AsObject<IngameState>();
-        }
+			SelectCharacterStatePtr = AllGameStates["SelectCharacterState"].Address;
+			WaitingStatePtr = AllGameStates["WaitingState"].Address;
+			InGameStatePtr = AllGameStates["InGameState"].Address;
+			LoadingState = AllGameStates["AreaLoadingState"].AsObject<AreaLoadingState>();
+			IngameState = AllGameStates["InGameState"].AsObject<IngameState>();
+		}
 
-        //I hope this caching will works fine
-        private static long PreGameStatePtr = -1;
+        //How to reversing it
+        //you should search for string of current active state, something like "IngameState" then you should search who using it (maybe on area change)..
+        //then after few scans you will got the green address. Then you know what to do..
+
+		//I hope this caching will works fine
+		private static long PreGameStatePtr = -1;
         private static long LoginStatePtr = -1;
         private static long SelectCharacterStatePtr = -1;
         private static long WaitingStatePtr = -1;
@@ -139,8 +142,8 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
     public class AreaLoadingState : GameState
     {
         //This is actualy pointer to loading screen stuff (image, etc), but should works fine.
-        public bool IsLoading => M.ReadLong(Address + 0xBD0) != 0;
-        public string AreaName => M.ReadString(Address + 0xBE8);
+        public bool IsLoading => M.ReadLong(Address + 0xAC0) == 1; 
+        public string AreaName => M.ReadStringU(M.ReadLong(Address + 0xBF0));
 
         public override string ToString()
         {

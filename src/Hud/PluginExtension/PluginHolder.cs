@@ -146,13 +146,17 @@ namespace PoeHUD.Hud.PluginExtension
                     if (DrawersIds.Contains(drawerId))
                     {
                         BasePlugin.LogError($"{PluginName}: Already contain settings child with id {menuAttrib.parentIndex}. Fixed by giving a new uniq ID. Property " + property.Name, 5);
-                        drawer.SettingId = GetUniqDrawerId();
+                       // drawer.SettingId = GetUniqDrawerId();
                     }
                     var propType = property.PropertyType;
 
                     if (propType == typeof(ButtonNode) || propType.IsSubclassOf(typeof(ButtonNode)))
                     {
                         drawer = new ButtonSettingDrawer(property.GetValue(Settings) as ButtonNode, menuAttrib.MenuName, drawerId);
+                    }
+                    else if (propType == typeof(TextNode) || propType.IsSubclassOf(typeof(TextNode)))
+                    {
+                        drawer = new TextSettingsDrawer(property.GetValue(Settings) as TextNode, menuAttrib.MenuName, drawerId);
                     }
                     else if (propType == typeof(EmptyNode) || propType.IsSubclassOf(typeof(EmptyNode)))
                     {
