@@ -80,21 +80,21 @@ namespace PoeHUD.Poe
 		}, "xxxxxxxxxxx");
 
 		private static readonly Pattern GameStatePattern = new Pattern(new byte[]
-{
+		{
 			0x48, 0x39, 0x2D, 0x3F, 0xA2, 0x52, 0x01,
-			0x0F, 0x85, 0x02, 0x01, 0x00, 0x00,
-			0xB9, 0x80, 0x00, 0x00, 0x00,
-			0xE8
-		}, "xxx????xxxxxxxxxxxx");
+			0x0F, 0x85, 0x28, 0x01, 0x00, 0x00,
+			0xC7, 0x40, 0x08, 0x80, 0x00, 0x00, 0x00,
+			0x8B,  0xCD
+		}, "xxx????xxxxxxxxxxxxxxx");
 
-        /*
+		/*
         PathOfExile_x64.exe+118FD9 - 4C 8B 35 48255B01     - mov r14,[PathOfExile_x64.exe+16CB528] { [C6151734A0] }<<here
         PathOfExile_x64.exe+118FE0 - 4D 85 F6              - test r14,r14
         PathOfExile_x64.exe+118FE3 - 0F94 C0               - sete al
         PathOfExile_x64.exe+118FE6 - 84 C0                 - test al,al
         */
 
-        public long AreaChangeCount { get; private set; }
+		public long AreaChangeCount { get; private set; }
         public long Base { get; private set; }
         public string ExeName { get; private set; }
         public long FileRoot { get; private set; }
@@ -105,22 +105,15 @@ namespace PoeHUD.Poe
 
         public void DoPatternScans(Memory m)
         {
-            long[] array = m.FindPatterns(basePtrPattern, fileRootPattern, areaChangePattern, GameStatePattern);
-            System.Console.WriteLine("Base Pattern: " + (m.AddressOfProcess + array[0]).ToString("x8"));
+            long[] array = m.FindPatterns(fileRootPattern, areaChangePattern, GameStatePattern);
 
-            Base = m.ReadInt(m.AddressOfProcess + array[0] + 0xF) + array[0] + 0x13;
-            System.Console.WriteLine("Base Address: " + (Base + m.AddressOfProcess).ToString("x8"));
-
-            long InGameState = m.ReadLong(Base + m.AddressOfProcess, 0x8, 0x110, 0x8A0);
-            System.Console.WriteLine("InGameState: " + InGameState.ToString("x8"));
-
-            FileRoot = m.ReadInt(m.AddressOfProcess + array[1] + 0x3) + array[1] + 0x7;
+            FileRoot = m.ReadInt(m.AddressOfProcess + array[0] + 0x3) + array[0] + 0x7;
             System.Console.WriteLine("FileRoot Pointer: " + (FileRoot + m.AddressOfProcess).ToString("x8"));
 
-			AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[2] + 0xB) + array[2] + 0xF;
+			AreaChangeCount = m.ReadInt(m.AddressOfProcess + array[1] + 0xB) + array[1] + 0xF;
 			System.Console.WriteLine("AreaChangeCount: " + m.ReadInt(AreaChangeCount + m.AddressOfProcess).ToString());
 
-            GameStateOffset = m.ReadInt(m.AddressOfProcess + array[3] + 0x03) + array[3] + 0x07;
+            GameStateOffset = m.ReadInt(m.AddressOfProcess + array[2] + 0x03) + array[2] + 0x07;
             System.Console.WriteLine("Game State Offset:" + (GameStateOffset + m.AddressOfProcess).ToString("x8"));
         }
     }

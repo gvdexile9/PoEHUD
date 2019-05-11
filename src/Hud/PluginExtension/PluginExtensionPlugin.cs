@@ -32,6 +32,7 @@ namespace PoeHUD.Hud.PluginExtension
             InitPlugins();
             gameController.EntityListWrapper.EntityAdded += OnEntityAdded;
             gameController.EntityListWrapper.EntityRemoved += OnEntityRemoved;
+            gameController.Area.AreaChange += area => eAreaChange(area);
         }
         
         public event Action eInitialise = delegate { };
@@ -39,6 +40,7 @@ namespace PoeHUD.Hud.PluginExtension
         public event Action<EntityWrapper> eEntityAdded = delegate { };
         public event Action<EntityWrapper> eEntityRemoved = delegate { };
         public event Action eClose = delegate { };
+        public event Action<AreaController> eAreaChange = delegate { };
         public static List<PluginHolder> Plugins { get; set; } = new List<PluginHolder>();
         private static List<string> PluginUpdateLog = new List<string>();
         public const string UpdateTempDir = "%PluginUpdate%";//Do not change this value. Otherwice this value in PoeHUD_PluginsUpdater plugin should be also changed.
@@ -208,13 +210,25 @@ namespace PoeHUD.Hud.PluginExtension
             }
 
             AppDomain.CurrentDomain.AppendPrivatePath(dir);
-            var myAsm = Assembly.Load(File.ReadAllBytes(path));
-            if (myAsm == null) return;
 
-            Type[] asmTypes = null;
+            Type[] asmTypes;
+            var debugCymboldFilePath = path.Replace(".dll", ".pdb");
             try
             {
+                Assembly myAsm;
+                if (File.Exists(debugCymboldFilePath))
+                {
+                    var dbgCymboldBytes = File.ReadAllBytes(debugCymboldFilePath);
+                    myAsm = Assembly.Load(File.ReadAllBytes(path), dbgCymboldBytes);
+                }
+                else
+                    myAsm = Assembly.Load(File.ReadAllBytes(path));
+            
                 asmTypes = myAsm.GetTypes();
+            }
+            catch (BadImageFormatException)
+            {
+                return;
             }
             catch (ReflectionTypeLoadException typeLoadException)
             {

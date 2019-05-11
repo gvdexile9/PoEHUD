@@ -49,46 +49,11 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <WarningLevel>4</WarningLevel>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-    <LangVersion>default</LangVersion>
-    <DocumentationFile>
-    </DocumentationFile>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Release\</OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-    <WarningLevel>0</WarningLevel>
-    <DefineConstants>
-    </DefineConstants>
-  </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>poehud.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
   <PropertyGroup>
     <StartupObject>PoeHUD.Program</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DefineConstants>DEBUG</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -100,7 +65,7 @@
     <LangVersion>default</LangVersion>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
@@ -132,8 +97,8 @@
       <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PoeFilterParser, Version=1.0.38.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\PoeFilterParser.1.0.38\lib\net46\PoeFilterParser.dll</HintPath>
+    <Reference Include="PoeFilterParser, Version=1.0.40.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PoeFilterParser.1.0.40\lib\net46\PoeFilterParser.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>packages\SharpDX.4.0.1\lib\net45\SharpDX.dll</HintPath>
@@ -282,14 +247,18 @@
     <Compile Include="Plugins\MenuAttribute.cs" />
     <Compile Include="Poe\Components\Animated.cs" />
     <Compile Include="Poe\Components\AnimatedComponents\ClientAnimationController.cs" />
+    <Compile Include="Poe\Components\Monolith.cs" />
     <Compile Include="Poe\Components\Portal.cs" />
     <Compile Include="Poe\Components\Prophecy.cs" />
     <Compile Include="Poe\Components\TimerComponent.cs" />
+    <Compile Include="Poe\Components\Transitionable.cs" />
+    <Compile Include="Poe\Elements\IncursionWindow.cs" />
     <Compile Include="Poe\Elements\InventoryElements\MapStashTabElement.cs" />
     <Compile Include="Poe\Elements\SubterraneanChart.cs" />
     <Compile Include="Poe\Elements\SyndicatePanel.cs" />
     <Compile Include="Poe\Elements\WorldMapElement.cs" />
     <Compile Include="Poe\Extensions.cs" />
+    <Compile Include="Poe\FilesInMemory\BestiaryCapturableMonsters.cs" />
     <Compile Include="Poe\FilesInMemory\ChestsDat.cs" />
     <Compile Include="Poe\FilesInMemory\GenericFilesInMemory.cs" />
     <Compile Include="Poe\FilesInMemory\PropheciesDat.cs" />
@@ -300,6 +269,12 @@
     <Compile Include="Poe\RemoteMemoryObjects\ActorVaalSkill.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AreaTemplate.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\AtlasNode.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryCapturableMonster.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryFamily.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryGenus.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryGroup.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryRecipe.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\BestiaryRecipeComponent.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalChoice.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalChoiceAction.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalData.cs" />
@@ -312,6 +287,7 @@
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalSyndicateLeadersData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\BetrayalTarget.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\ChestDat.cs" />
+    <Compile Include="Poe\RemoteMemoryObjects\LabelOnGround.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\GenericFileInMemory.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\Labyrinth\LabyrinthData.cs" />
     <Compile Include="Poe\RemoteMemoryObjects\MonsterVariety.cs" />

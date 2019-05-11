@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PoeHUD.Controllers;
 
 namespace PoeHUD.Poe.RemoteMemoryObjects
 {
@@ -11,12 +12,17 @@ namespace PoeHUD.Poe.RemoteMemoryObjects
         public bool HasWaypoint => M.ReadByte(Address + 0x15) == 1;
         public int MonsterLevel => M.ReadInt(Address + 0x26);
         public int WorldAreaId => M.ReadInt(Address + 0x2A);
+        public bool IsMap => M.ReadByte(Address + 0x7A) > 0;//or 0x130
+        public bool IsEndGameMap => M.ReadByte(Address + 0xBA) > 0;
 
-		/// <summary>
-		/// Possible amount (varieties) of CorruptedAreas
-		/// </summary>
+        private WorldArea _worldArea;
+        //public WorldArea WorldArea => _worldArea == null ? _worldArea = GameController.Instance.Files.WorldAreas.GetAreaByAreaId(WorldAreaId) : _worldArea;
+
+        /// <summary>
+        /// Possible amount (varieties) of CorruptedAreas
+        /// </summary>
         public int CorruptedAreasVariety => M.ReadInt(Address + 0xFB);
-	    public List<WorldArea> PossibleCorruptedAreas => M.ReadClassesFromPointerArray<WorldArea>(Address + 0x103, CorruptedAreasVariety);
+        public List<WorldArea> PossibleCorruptedAreas => M.ReadClassesFromPointerArray<WorldArea>(Address + 0x103, CorruptedAreasVariety);
     }
 
     /*

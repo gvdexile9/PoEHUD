@@ -89,7 +89,7 @@ Metadata/Monsters/Daemon/ChestDaemonSummonChaosWarband; Renegades Cache; ffD2742
 
 # PERANDUS LEAGUE
 
-Metadata/NPC/League/Cadiro; Cadiro; ffD2742D
+Metadata/NPC/League/Perandus/Cadiro; Cadiro; ffD2742D
 Metadata/Monsters/Perandus/PerandusGuardMapBoss1; Platinia, Servant of Prospero; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss2; Auriot, Prospero's Furnace Guardian; ffFFD700
 Metadata/Monsters/Perandus/PerandusGuardMapBoss3; Rhodion, Servant of Prospero; ffFFD700
@@ -423,9 +423,8 @@ Metadata/Chests/Abyss/AbyssFinalChest3; Abyss #3; ff00AA00
 Metadata/Chests/Abyss/AbyssFinalChest4; Abyss #4; ff00AA00
 
 # BETRAYAL
-Metadata/NPC/League/BetrayalNinjaCopRaid; Syndicate Research; ff00FF00
+Metadata/NPC/League/Betrayal/BetrayalNinjaCopRaid; Syndicate Research; ff00FF00
 Metadata/Monsters/LeagueBetrayal/FortWall/FortWall; Syndicate Fortification; ff00FF00
-Metadata/Monsters/LeagueBetrayal/BetrayalSecretPoliceChampion; Syndicate Interception; ff00FF00
 Metadata/Monsters/LeagueBetrayal/BetrayalOriathBlackguardMeleeChampionCartGuard; Syndicate Transportation; ff00FF00
 
 Metadata/Monsters/LeagueBetrayal/BetrayalCatarina; Catarina, Master of Undeath; ff36b4b4
@@ -448,10 +447,10 @@ Metadata/Monsters/LeagueBetrayal/BetrayalVagan; Vagan, Victory's Herald; ff36b4b
 Metadata/Monsters/LeagueBetrayal/BetrayalThane; Thane Jorgin the Banished; ff36b4b4
 Metadata/Monsters/LeagueBetrayal/BetrayalKeema; Korell Goya, Son of Stone; ff36b4b4
 
-Metadata/NPC/League/TreasureHunterWild; Alva, Master Explorer; ff64ffff 
+Metadata/NPC/League/Incursion/TreasureHunterWild; Alva, Master Explorer; ff64ffff
 Metadata/Monsters/Masters/Einhar; Einhar, Beastmaster; ff64ffff
-Metadata/NPC/League/DelveMinerWildVein; Niko, Master of the Depths; ff64ffff
-Metadata/NPC/League/DelveMinerWildChest; Niko, Master of the Depths; ff64ffff
+Metadata/NPC/League/Delve/DelveMinerWildVein; Niko, Master of the Depths; ff64ffff
+Metadata/NPC/League/Delve/DelveMinerWildChest; Niko, Master of the Depths; ff64ffff
 
 # CRAFTING RECIPES
 Metadata/Terrain/Missions/CraftingUnlocks/BeastRecipe; Crafting Recipe; ff964DF1
